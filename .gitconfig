@@ -1,0 +1,166 @@
+[user]
+  name = "Chris Lusk"
+  email = "chris.m.lusk@gmail.com"
+
+[alias]
+
+  # Staging
+  a = add
+  aa = add --all
+
+  # Branch
+  br = "!git for-each-ref --format='%(committerdate:short),%(authorname),%(refname:short)' --sort=committerdate refs/heads/ | column -t -s ','"
+  bra = branch -a
+  brd = branch -d
+  me = "!git rev-parse --abbrev-ref HEAD"   # Current branch
+
+  # Commit
+  ci = commit
+  cim = commit -m
+  amend = commit --amend --no-edit
+
+  # Clone
+  cl = clone
+  cls = clone --depth=1
+
+  # Checkout
+  co = "!f() { \
+    git checkout -b \"$1\" 2>/dev/null || git checkout \"$1\"; \
+  }; f"              # Switch to branch, creating it if necessary
+  cob = checkout -b
+  cod = "!git checkout dev 2>/dev/null || git checkout develop"  # Dev or Develop
+  com = "!git checkout main 2>/dev/null || git checkout master"  # Main or Master
+
+  # Cherry-pick
+  cp = cherry-pick
+
+  # Diff
+  df = diff --color-words=. --ws-error-highlight=new,old
+  dfc = diff --cached
+  dfs = diff --staged --ws-error-highlight=new,old
+
+  # Merge
+  m = merge
+
+  # Push
+  p = push
+  up = "!git push origin -u $(git me)"      # Publish current branch
+
+  # Status / Logging
+  st = status -bs
+  slog = log -5 --pretty=custom
+  hist = log --graph --pretty=custom
+  llog = log --graph --abbrev-commit --decorate --date=relative --all
+  who = shortlog --summary --numbered       # List contributors
+  ls = ls-files
+
+  # Reset
+  undo = reset --soft HEAD~1                   # Undo last commit (HEAD only)
+  unstage = reset HEAD --                      # Mixed reset (HEAD and index)
+  reset = reset --hard HEAD~1                  # Remove last commit (from HEAD, index, and working dir)
+  nope = "!git reset --hard && git clean -df"  # Reset any local and staged changes
+
+  # Remote
+  r = remote -v
+
+  # Misc
+  aliases = "!git config --get-regexp ^alias\\."
+
+[apply]
+  # Detect whitespace errors when applying a patch
+  whitespace = fix
+  
+[branch]
+  autosetuprebase = always
+
+[core]
+  attributesfile = ~/.gitattributes
+  excludesfile = ~/.gitignore
+
+  # Treat spaces before tabs and all kinds of trailing whitespace as an error
+  # [default] trailing-space: looks for spaces at the end of a line
+  # [default] space-before-tab: looks for spaces before tabs at line beginning
+  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+  # Make `git rebase` safer on macOS
+  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+  trustctime = false
+
+  # Prevent showing files whose names contain non-ASCII symbols as unversioned.
+  # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+  precomposeunicode = false
+
+  # Speed up commands involving untracked files such as `git status`.
+  # https://git-scm.com/docs/git-update-index#_untracked_cache
+  untrackedCache = true
+
+  pager = less --tabs=4 -RFX
+
+[color]
+  ui = true
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+
+[color "branch"]
+  current = green bold
+  local = green
+  remote = yellow
+
+[color "diff"]
+  meta = yellow
+  commit = green bold
+  frag = magenta bold # line info
+  old = red # deletions
+  new = green # additions
+  whitespace = red reverse
+
+[color "status"]
+  added = green bold
+  changed = yellow bold
+  untracked = cyan bold
+
+[credential]
+	helper = osxkeychain
+
+[diff]
+  # Detect copies as well as renames
+  renames = copies
+
+[diff "bin"]
+  # Use `hexdump` to diff binary files
+  textconv = hexdump -v -C
+
+[fetch]
+  prune = true
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[init]
+  defaultBranch = main
+
+[merge]
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+
+[pretty]
+  custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
+  #                     │        │            │            │             └─ author name
+  #                     │        │            │            └─ message
+  #                     │        │            └─ date (relative)
+  #                     │        └─ decorations (branch, heads or tags)
+  #                     └─ hash (abbreviated)
+
+[push]
+  # https://git-scm.com/docs/git-config#git-config-pushdefault
+  default = current
+  # Make `git push` push relevant annotated tags when pushing branches out.
+  followTags = true
+
+[pull]
+	rebase = false
