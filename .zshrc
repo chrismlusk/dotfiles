@@ -185,7 +185,6 @@
   plugins=(git git-extras) # Git plugins
   plugins+=(macos last-working-dir) # Standard & MacOS plugins
   plugins+=(npm) # JavaScript plugins
-  plugins+=(zsh-completions)
 
   source $ZSH/oh-my-zsh.sh
 
