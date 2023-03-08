@@ -18,7 +18,7 @@
 # -------------------------------------
 
   # Basic bins (lead with Homebrew)
-  export BASIC="/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/sbin"
+  export BASIC="/opt/homebrew/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
 
   # N (see http://git.io/n-install-repo)
   export N_PREFIX="$HOME/.n"
@@ -27,13 +27,10 @@
   # Git
   export GIT="/usr/local/git/bin"
 
-  # MySQL
-  export MYSQL="/usr/local/mysql/bin"
-
   # Path all the things!
   # Why is `N_PATH` before the basic path?
   # https://github.com/Homebrew/homebrew-core/pull/36222#commitcomment-32090028
-  export PATH=$N_PATH:$BASIC:$GIT:$MYSQL
+  export PATH=$N_PATH:$BASIC:$GIT
 
 
 
@@ -260,3 +257,5 @@
   # PIP
   alias pip-check='pip-check --hide-unchanged --show-update'
   alias pip3-check='pip-check --hide-unchanged --show-update --cmd=pip3'
+
+  source ~/.zshrc.private

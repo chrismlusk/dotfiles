@@ -69,7 +69,7 @@
 [apply]
   # Detect whitespace errors when applying a patch
   whitespace = fix
-  
+
 [branch]
   autosetuprebase = always
 
@@ -143,6 +143,9 @@
 
 [init]
   defaultBranch = main
+
+[interactive]
+  diffFilter = delta --color-only
 
 [merge]
   # Include summaries of merged commits in newly created merge commit messages
