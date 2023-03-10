@@ -30,7 +30,7 @@
   # Path all the things!
   # Why is `N_PATH` before the basic path?
   # https://github.com/Homebrew/homebrew-core/pull/36222#commitcomment-32090028
-  export PATH=$N_PATH:$BASIC:$GIT
+  export PATH=$N_PATH:$BASIC
 
 
 
@@ -61,6 +61,9 @@
 
   # Stop Git from asking for merge messages
   export GIT_MERGE_AUTOEDIT="no"
+
+  # Hide Homebrew environment hints
+  export HOMEBREW_NO_ENV_HINTS=true
 
   # Set colors
   export CLICOLOR="1"
@@ -226,6 +229,7 @@
   alias e='exit'                              # Exit
   alias edit='code'                           # Opens file in my editor
   alias f='open -a Finder ./'                 # Opens dir in Finder
+  alias finder='open -a Finder ./'            # Opens dir in Finder
   alias h='cd ~'                              # Go home
   alias home='cd ~'                           # Go home
   alias ll='ls -Fahop'                        # Enhanced `ls`
