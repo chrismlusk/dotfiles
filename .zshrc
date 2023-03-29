@@ -18,14 +18,11 @@
 # -------------------------------------
 
   # Basic bins (lead with Homebrew)
-  export BASIC="/opt/homebrew/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+  export BASIC="$HOMEBREW_PREFIX/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
 
   # N (see http://git.io/n-install-repo)
   export N_PREFIX="$HOME/.n"
   export N_PATH="$N_PREFIX/bin"
-
-  # Git
-  export GIT="/usr/local/git/bin"
 
   # Path all the things!
   # Why is `N_PATH` before the basic path?
@@ -43,7 +40,7 @@
   [[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh"
 
   # Default shell
-  export SHELL="/usr/local/bin/zsh"
+  export SHELL="$HOMEBREW_PREFIX/bin/zsh"
 
   # Default editor
   export EDITOR="code -w"
