@@ -168,5 +168,5 @@
 [pull]
 	rebase = false
 
-[includeIf "gitdir:~/Code/"]
+[includeIf "gitdir:~/"]
   path = ~/.gitconfig.private
