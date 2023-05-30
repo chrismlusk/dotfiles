@@ -18,7 +18,7 @@
 # -------------------------------------
 
   # Basic bins (lead with Homebrew)
-  export BASIC="$HOMEBREW_PREFIX/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+  export BASIC="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
 
   # N (see http://git.io/n-install-repo)
   export N_PREFIX="$HOME/.n"
@@ -102,7 +102,7 @@
 
   # Find my IP address (public and local)
   alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-  alias iplocal="ipconfig getifaddr en0"
+  alias localip="ipconfig getifaddr en0"
 
   alias netCons="lsof -i"                            # Show open TCP/IP sockets
   alias flushDNS="dscacheutil -flushcache"           # Flush out DNS Cache
@@ -211,40 +211,84 @@
 # 9.  ALIASES
 # -------------------------------------
 
-  cd() { builtin cd "$@"; ls -Fahop; }        # List dir contents upon `cd`
-  mkd () { mkdir -p "$@" && cd "$@" }         # Makes dir and jumps inside
+  # List dir contents upon `cd`
+  cd() { builtin cd "$@"; ls -Fahop; }
 
-  alias ..='cd ../'                           # Go back 1 directory level
-  alias .2='cd ../../'                        # Go back 2 directory levels
-  alias .3='cd ../../../'                     # Go back 3 directory levels
-  alias .4='cd ../../../../'                  # Go back 4 directory levels
-  alias .5='cd ../../../../../'               # Go back 5 directory levels
-  alias c='clear'                             # Clear terminal display
-  alias cat='bat'                             # Replace `cat`
-  alias cll='clear; ll'                       # Clear and list contents
-  alias cp='cp -iv'                           # Preferred `cp`
-  alias e='exit'                              # Exit
-  alias edit='code'                           # Opens file in my editor
-  alias f='open -a Finder ./'                 # Opens dir in Finder
-  alias finder='open -a Finder ./'            # Opens dir in Finder
-  alias h='cd ~'                              # Go home
-  alias home='cd ~'                           # Go home
-  alias ll='ls -Fahop'                        # Enhanced `ls`
-  alias ls='ls -Fa'                           # Preferred `ls`
-  alias lsd='ls -l | grep "^d"'               # List only directories
-  alias mv='mv -iv'                           # Preferred `mv`
-  alias mkdir='mkdir -p'                      # Preferred `mkdir`
-  alias path='echo -e ${PATH//:/\\n}'         # Echo all executable Paths
-  alias reload='source ~/.zshrc'              # Reload `.zshrc`
-  alias rm='rm -i'                            # Preferred `rm` (ask for confirmation)
-  alias which='type -a'                       # Find executables
-  alias zshrc='edit ~/.zshrc'                 # Edit this config file
+  # Makes dir and jumps inside
+  mkd () { mkdir -p "$@" && cd "$@" }
+
+  # Go back 1 directory level
+  alias ..='cd ../'
+
+  # Go back 2 directory level
+  alias .2='cd ../../'
+
+  # Go back 3 directory level
+  alias .3='cd ../../../'
+
+  # Clear terminal display
+  alias c='clear'
+
+  # Replace `cat`
+  alias cat='bat'
+
+  # Clear and list contents
+  alias cll='clear; ll'
+
+  # Preferred `cp`
+  alias cp='cp -iv'
+
+  # Exit
+  alias e='exit'
+
+  # Opens file in my editor
+  alias edit='code'
+
+  # Opens current directory in Finder
+  alias f='open -a Finder ./'
+
+  # Go home
+  alias h='cd ~'
+  alias home='cd ~'
+
+  # Enhanced `ls`
+  alias ll='ls -Fahop'
+
+  # Preferred `ls`
+  alias ls='ls -Fa'
+
+  # List only directories
+  alias lsd='ls -l | grep "^d"'
+
+  # Preferred `mv`
+  alias mv='mv -iv'
+
+  # Preferred `mkdir`
+  alias mkdir='mkdir -p'
+
+  # Echo all executable Paths
+  alias path='echo -e ${PATH//:/\\n}'
+
+  # Reload `.zshrc`
+  alias reload='source ~/.zshrc'
+
+  # Preferred `rm` (ask for confirmation)
+  alias rm='rm -i'
+
+  # Enable aliases to be sudo’d
+  alias sudo='sudo '
+
+  # Find executables
+  alias which='type -a'
+
+  # Edit this config file
+  alias zshrc='edit ~/.zshrc'
 
   # Craft CMS
   craft() { ./app/craft "$@" 2>/dev/null || ./craft "$@"; }
 
-  # One Design
-  alias osh='cd ~/Code/ODC/oak-street-health' # Go to the Oak Street Health project
+  # Go to the Oak Street Health project
+  alias osh='cd ~/Code/ODC/oak-street-health'
 
   # Homebrew
   alias -g brewme='brew update && brew upgrade --greedy'
@@ -254,9 +298,5 @@
   alias nrs='npm run start'
   alias npmls='npm list -g --depth=0'
   alias npm-check='npx npm-check -u'
-
-  # PIP
-  alias pip-check='pip-check --hide-unchanged --show-update'
-  alias pip3-check='pip-check --hide-unchanged --show-update --cmd=pip3'
 
   source ~/.zshrc.private

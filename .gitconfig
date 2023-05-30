@@ -17,7 +17,9 @@
   # Commit
   ci = commit
   cim = commit -m
-  amend = commit --amend --no-edit
+
+  # Amend the currently staged files to the latest commit.
+	amend = commit --amend --reuse-message=HEAD
 
   # Clone
   cl = clone
@@ -47,6 +49,7 @@
   up = "!git push origin -u $(git me)"      # Publish current branch
 
   # Status / Logging
+  s = status -bs
   st = status -bs
   slog = log -5 --pretty=custom
   hist = log --graph --pretty=custom
