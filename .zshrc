@@ -77,8 +77,11 @@
 # 3.  FILE MANAGEMENT
 # -------------------------------------
 
-  zipf () { zip -r "$1".zip "$1" }            # Create ZIP archive of folder
-  alias numFiles='echo $(ls -1 | wc -l)'      # Count non-hidden files in dir
+  # Create ZIP archive of folder
+  zipf () { zip -r "$1".zip "$1" }
+
+  # Count non-hidden files in directory
+  alias numFiles='echo $(ls -1 | wc -l)'
 
 
 
@@ -104,12 +107,23 @@
   alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
   alias localip="ipconfig getifaddr en0"
 
-  alias netCons="lsof -i"                            # Show open TCP/IP sockets
-  alias flushDNS="dscacheutil -flushcache"           # Flush out DNS Cache
-  alias lsock="sudo /usr/sbin/lsof -i -P"            # Show open sockets
-  alias lsockU="sudo /usr/sbin/lsof -nP | grep UDP"  # Show open UDP sockets
-  alias lsockT="sudo /usr/sbin/lsof -nP | grep TCP"  # Show open TCP sockets
-  alias openPorts="sudo lsof -i | grep LISTEN"       # Listening connections
+  # Show open TCP/IP sockets
+  alias netCons="lsof -i"
+
+  # Flush out DNS Cache
+  alias flushDNS="dscacheutil -flushcache"
+
+  # Show open sockets
+  alias lsock="sudo /usr/sbin/lsof -i -P"
+
+  # Show open UDP sockets
+  alias lsockU="sudo /usr/sbin/lsof -nP | grep UDP"
+
+  # Show open TCP sockets
+  alias lsockT="sudo /usr/sbin/lsof -nP | grep TCP"
+
+  # Listening connections
+  alias openPorts="sudo lsof -i | grep LISTEN"
 
 
 
