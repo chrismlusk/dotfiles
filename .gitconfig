@@ -1,6 +1,7 @@
 [user]
   name = "Chris Lusk"
   email = "chris.m.lusk@gmail.com"
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC9QfiUdH05QCeef7RWM+Sxiai2gKjLRcvjDyebXGtKe
 
 [alias]
 
@@ -32,6 +33,7 @@
   cob = checkout -b
   cod = "!git checkout dev 2>/dev/null || git checkout develop"  # Dev or Develop
   com = "!git checkout main 2>/dev/null || git checkout master"  # Main or Master
+  com = "!git checkout staging 2>/dev/null || git checkout stage"  # Staging or Stage
 
   # Cherry-pick
   cp = cherry-pick
@@ -173,3 +175,9 @@
 
 [includeIf "gitdir:~/"]
   path = ~/.gitconfig.private
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
