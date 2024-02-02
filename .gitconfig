@@ -33,7 +33,7 @@
   cob = checkout -b
   cod = "!git checkout dev 2>/dev/null || git checkout develop"  # Dev or Develop
   com = "!git checkout main 2>/dev/null || git checkout master"  # Main or Master
-  com = "!git checkout staging 2>/dev/null || git checkout stage"  # Staging or Stage
+  cos = "!git checkout staging 2>/dev/null || git checkout stage"  # Staging or Stage
 
   # Cherry-pick
   cp = cherry-pick
