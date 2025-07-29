@@ -252,6 +252,9 @@
   # Preferred `cp`
   alias cp='cp -iv'
 
+  # Go to dotfiles directory
+  alias dotfiles="cd $HOME/dotfiles"
+
   # Exit
   alias e='exit'
 
