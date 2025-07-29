@@ -104,7 +104,7 @@
 # -------------------------------------
 
   # Find my IP address (public and local)
-  alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+  alias ip="dig +short txt ch whoami.cloudflare @1.0.0.1"
   alias localip="ipconfig getifaddr en0"
 
   # Show open TCP/IP sockets
@@ -314,3 +314,8 @@
   alias npm-check='npx npm-check -u'
 
   source ~/.zshrc.private
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/chrislusk/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
