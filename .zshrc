@@ -254,6 +254,7 @@
 
   # Go to dotfiles directory
   alias dotfiles="cd $HOME/dotfiles"
+  alias dot="cd $HOME/dotfiles"
 
   # Exit
   alias e='exit'
@@ -305,7 +306,7 @@
   craft() { ./app/craft "$@" 2>/dev/null || ./craft "$@"; }
 
   # Go to the Oak Street Health project
-  alias osh='cd ~/Code/ODC/oak-street-health'
+  alias osh='cd ~/Code/oak-street-health'
 
   # Homebrew
   alias -g brewme='brew update && brew upgrade --greedy'
