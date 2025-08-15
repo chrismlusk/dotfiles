@@ -308,6 +308,9 @@
   # Go to the Oak Street Health project
   alias osh='cd ~/Code/oak-street-health'
 
+  # Go to the Oak Street Health Geo Worker project
+  alias osh-geo='cd ~/Code/oak-street-health-geo-worker'
+
   # Homebrew
   alias -g brewme='brew update && brew upgrade --greedy'
 
