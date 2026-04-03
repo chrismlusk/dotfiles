@@ -11,18 +11,15 @@ npm-debug.log
 .cache
 .eslintcache
 *.log
-/logs/
+logs/
 /tmp
 
 # MISC FILES
-.cache
-.idea/
+.env
 .history
-.project
-.settings
-*.esproj
+.idea/
+*.orig
 *.sublime-workspace
 *.sublime-project
-*.tmproj
-*.tmproject
+.turbo/
 .vscode
