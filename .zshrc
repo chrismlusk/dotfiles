@@ -1,12 +1,12 @@
 # -------------------------------------------------------------------
 #  1.  Set Paths
 #  2.  Environment Config
-#  3.  File Management
-#  4.  Process Management
-#  5.  Networking
-#  6.  System Operations
-#  7.  Web Development
-#  8.  Oh My ZSH
+#  3.  OH MY ZSH
+#  4.  File Management
+#  5.  Process Management
+#  6.  Networking
+#  7.  System Operations
+#  8.  Web Development
 #  9.  Aliases
 # -------------------------------------------------------------------
 
@@ -18,7 +18,7 @@
 # -------------------------------------
 
   # Basic bins (lead with Homebrew)
-  export BASIC="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+  export BASIC="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin:$HOME/.local/bin"
 
   # N (see http://git.io/n-install-repo)
   export N_PREFIX="$HOME/.n"
@@ -29,15 +29,15 @@
   # https://github.com/Homebrew/homebrew-core/pull/36222#commitcomment-32090028
   export PATH=$N_PATH:$BASIC
 
+  # Added by Docker Desktop to enable Docker CLI completions.
+  fpath=($HOME/.docker/completions $fpath)
+
 
 
 
 # -------------------------------------
 # 2.  ENVIRONMENT CONFIG
 # -------------------------------------
-
-  # Load avn (see https://github.com/wbyoung/avn)
-  [[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh"
 
   # Default shell
   export SHELL="$HOMEBREW_PREFIX/bin/zsh"
@@ -51,13 +51,8 @@
   # Language environment
   export LANG="en_US.UTF-8"
 
-  export ARCHFLAGS="-arch x86_64"
-  export SSH_KEY_PATH="~/.ssh/rsa_id"
-  export MANPATH="/usr/local/man:$MANPATH"
+  export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
   export PROJECT_HOME="$HOME/Code"
-
-  # Stop Git from asking for merge messages
-  export GIT_MERGE_AUTOEDIT="no"
 
   # Hide Homebrew environment hints
   export HOMEBREW_NO_ENV_HINTS=true
@@ -74,11 +69,67 @@
 
 
 # -------------------------------------
-# 3.  FILE MANAGEMENT
+# 3. OH MY ZSH
+# -------------------------------------
+
+  # Path to oh-my-zsh installation
+  export ZSH="$HOME/.oh-my-zsh"
+
+  # Set name of the theme to load
+  ZSH_THEME="spaceship"
+
+  # Which plugins would you like to load?
+  # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+  # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+  plugins=(git git-extras) # Git plugins
+  plugins+=(macos last-working-dir) # Standard & MacOS plugins
+  plugins+=(npm) # JavaScript plugins
+
+  ## Disable Git zsh integration to help speed things up.
+  # See https://blog.jonlu.ca/posts/speeding-up-zsh#observations
+  DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+  source $ZSH/oh-my-zsh.sh
+
+  ## Override history settings after loading
+  SAVEHIST=50000
+  # Enable extended history format (timestamp, duration, etc.)
+  setopt EXTENDED_HISTORY
+  # Share history across zsh sessions
+  setopt SHARE_HISTORY
+  # Do not store duplications
+  setopt HIST_IGNORE_ALL_DUPS
+  # Prefix any command with a space to keep it out of history
+  setopt HIST_IGNORE_SPACE
+
+
+
+
+# -------------------------------------
+# 4.  FILE MANAGEMENT
 # -------------------------------------
 
   # Create ZIP archive of folder
   zipf () { zip -r "$1".zip "$1" }
+
+  # Extract various archive formats
+  extract() {
+    if [ -f "$1" ]; then
+      case "$1" in
+        *.tar.bz2) tar xjf "$1" ;;
+        *.tar.gz)  tar xzf "$1" ;;
+        *.tar.xz)  tar xJf "$1" ;;
+        *.bz2)     bunzip2 "$1" ;;
+        *.gz)      gunzip "$1"  ;;
+        *.tar)     tar xf "$1"  ;;
+        *.zip)     unzip "$1"   ;;
+        *)         echo "'$1' cannot be extracted" ;;
+      esac
+    else
+      echo "'$1' is not a valid file"
+    fi
+  }
+
 
   # Count non-hidden files in directory
   alias numFiles='echo $(ls -1 | wc -l)'
@@ -87,7 +138,7 @@
 
 
 # -------------------------------------
-# 4.  PROCESS MANAGEMENT
+# 5.  PROCESS MANAGEMENT
 # -------------------------------------
 
   # cpuHogs:  Find CPU hogs
@@ -100,7 +151,7 @@
 
 
 # -------------------------------------
-# 5.  NETWORKING
+# 6.  NETWORKING
 # -------------------------------------
 
   # Find my IP address (public and local)
@@ -125,11 +176,14 @@
   # Listening connections
   alias openPorts="sudo lsof -i | grep LISTEN"
 
+  # What's running on a given port?
+  port() { lsof -i ":$1" | grep LISTEN }
+
 
 
 
 # -------------------------------------
-# 6.  SYSTEMS OPERATIONS
+# 7.  SYSTEMS OPERATIONS
 # -------------------------------------
 
   # Show or hide hidden files
@@ -165,58 +219,17 @@
 
 
 # -------------------------------------
-# 7.  WEB DEVELOPMENT
+# 8.  WEB DEVELOPMENT
 # -------------------------------------
 
   # Edit `/etc/hosts` file
   alias editHosts="sudo nano /etc/hosts"
 
   # Grabs headers from page
-  httpHeaders () { /usr/bin/curl -I -L $@ ; }
+  httpHeaders () { /usr/bin/curl -I -L "$@" ; }
 
   # Download a web page and show info on what took time
-  httpDebug () { /usr/bin/curl $@ -o /dev/null -w "dns: %{time_namelookup} connect: %{time_connect} pretransfer: %{time_pretransfer} starttransfer: %{time_starttransfer} total: %{time_total}\n" ; }
-
-
-
-
-# -------------------------------------
-# 8. OH MY ZSH
-# -------------------------------------
-
-  # Path to oh-my-zsh installation
-  export ZSH="$HOME/.oh-my-zsh"
-
-  # Set name of the theme to load
-  ZSH_THEME="spaceship"
-
-  # Which plugins would you like to load?
-  # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-  # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-  plugins=(git git-extras) # Git plugins
-  plugins+=(macos last-working-dir) # Standard & MacOS plugins
-  plugins+=(npm) # JavaScript plugins
-
-  source $ZSH/oh-my-zsh.sh
-
-  ## History Size and Save History Size
-  HISTSIZE=5000
-  HISTFILESIZE=10000
-  SAVEHIST=5000
-  setopt EXTENDED_HISTORY
-  HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
-  # share history across multiple zsh sessions
-  setopt SHARE_HISTORY
-  # append to history
-  setopt APPEND_HISTORY
-  # adds commands as they are typed, not at shell exit
-  setopt INC_APPEND_HISTORY
-  # do not store duplications
-  setopt HIST_IGNORE_DUPS
-
-  ## Disable Git zsh integration to help speed things up.
-  # See https://blog.jonlu.ca/posts/speeding-up-zsh#observations
-  DISABLE_UNTRACKED_FILES_DIRTY="true"
+  httpDebug () { /usr/bin/curl "$@" -o /dev/null -w "dns: %{time_namelookup} connect: %{time_connect} pretransfer: %{time_pretransfer} starttransfer: %{time_starttransfer} total: %{time_total}\n" ; }
 
 
 
@@ -244,7 +257,8 @@
   alias c='clear'
 
   # Replace `cat`
-  alias cat='bat'
+  alias cat='bat -p'
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
   # Clear and list contents
   alias cll='clear; ll'
@@ -276,7 +290,7 @@
   alias ls='ls -Fa'
 
   # List only directories
-  alias lsd='ls -l | grep "^d"'
+  alias lsd='ls -d */'
 
   # Preferred `mv`
   alias mv='mv -iv'
@@ -302,14 +316,8 @@
   # Edit this config file
   alias zshrc='edit ~/.zshrc'
 
-  # Craft CMS
-  craft() { ./app/craft "$@" 2>/dev/null || ./craft "$@"; }
-
   # Go to the Oak Street Health project
   alias osh='cd ~/Code/oak-street-health'
-
-  # Go to the Oak Street Health Geo Worker project
-  alias osh-geo='cd ~/Code/oak-street-health-geo-worker'
 
   # Homebrew
   alias -g brewme='brew update && brew upgrade --greedy'
@@ -321,8 +329,3 @@
   alias npm-check='npx npm-check -u'
 
   source ~/.zshrc.private
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/chrislusk/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
